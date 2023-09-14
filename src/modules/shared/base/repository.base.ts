@@ -3,6 +3,7 @@ import { QueryOptionsRequestDto } from '@common/dtos/query-options.request.dto';
 import { ExceptionCodes } from '@common/exceptions/constants/exception-codes.enum';
 import { ExceptionFactory } from '@common/exceptions/exception.factory';
 import { BaseDocument } from '@database/schemas/types/document.base';
+import { InternalServerErrorException } from '@nestjs/common';
 import {
   FilterQuery,
   Model,
@@ -10,12 +11,7 @@ import {
   QueryOptions,
   Types,
 } from 'mongoose';
-import {
-  stringToSearchObject,
-  stringToSortObject,
-} from '../transforms/query-options.transform';
 import { BaseRepositoryInterface } from '../types/repository.base.interface';
-import { InternalServerErrorException } from '@nestjs/common';
 
 export class BaseRepository<T extends BaseDocument>
   implements BaseRepositoryInterface<T>
@@ -72,16 +68,9 @@ export class BaseRepository<T extends BaseDocument>
       );
     }
 
-    const sortObject = stringToSortObject(sort);
-    const searchObject = stringToSearchObject(search);
-
     const documents = await this.model
-      .find(
-        { ...conditions, ...searchObject, deletedAt: null },
-        projection,
-        options,
-      )
-      .sort(sortObject)
+      .find({ ...conditions, ...search, deletedAt: null }, projection, options)
+      .sort(sort)
       .lean();
     if (!documents) {
       throw ExceptionFactory.create(
@@ -138,17 +127,14 @@ export class BaseRepository<T extends BaseDocument>
       );
     }
 
-    const sortObject = stringToSortObject(sort);
-    const searchObject = stringToSearchObject(search);
-
-    const documents = this.model.find({ ...conditions, ...searchObject });
+    const documents = this.model.find({ ...conditions, ...search });
     const total = await documents.clone().countDocuments();
 
     if (pageSize >= 1) {
       documents.limit(pageSize);
       if (page >= 0) documents.skip((page - 1) * pageSize);
     }
-    documents.sort(sortObject);
+    documents.sort(sort);
 
     return {
       data: await documents.lean(),

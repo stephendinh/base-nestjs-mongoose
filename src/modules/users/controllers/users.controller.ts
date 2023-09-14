@@ -21,8 +21,7 @@ export class UsersController {
     @Query() query: FindAllUsersDto,
     @Query() options: QueryOptionsRequestDto,
   ): Promise<AppResponseDto<UserResponseDto[]>> {
-    const users = this.usersService.findAllUsers(query, options);
-    return users;
+    return this.usersService.findAllUsers(query, options);
   }
 
   @ApiOperation({ summary: 'find user by email' })
@@ -32,8 +31,7 @@ export class UsersController {
   async findUserByEmail(
     @Param('email') email: string,
   ): Promise<AppResponseDto<UserResponseDto>> {
-    const user = this.usersService.findUserByEmail(email);
-    return user;
+    return this.usersService.findUserByEmail(email);
   }
 
   @ApiOperation({ summary: 'Check user is exist' })
@@ -42,7 +40,6 @@ export class UsersController {
   async userExists(
     @Param('email') email: string,
   ): Promise<AppResponseDto<boolean>> {
-    const user = this.usersService.userExists(email);
-    return user;
+    return this.usersService.userExists(email);
   }
 }

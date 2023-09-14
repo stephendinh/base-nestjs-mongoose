@@ -28,7 +28,6 @@ export class HttpCacheInterceptor extends CacheInterceptor {
     }
     return next.handle().pipe(
       tap((response) => {
-        console.log(this.cacheManager);
         return this.cacheManager.set(cacheKey, response);
       }),
     );

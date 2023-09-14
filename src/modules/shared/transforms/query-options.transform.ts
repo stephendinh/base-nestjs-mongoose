@@ -21,9 +21,7 @@ export function stringToSortObject(value: string): {
   return sort;
 }
 
-export function stringToSearchObject(value: string): {
-  [key: string]: SortOrder;
-} {
+export function stringToSearchObject(value: string): { [key: string]: string } {
   const search = {};
   value = value ? JSON.parse(value) : null;
   if (value && Array.isArray(value)) {
