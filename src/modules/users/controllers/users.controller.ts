@@ -14,7 +14,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @ApiOperation({ summary: 'find all users' })
-  @ApiResponse(UserResponseDto)
+  @ApiResponse([UserResponseDto])
   @CacheKey('find-all-users')
   @Get()
   async findAllUsers(
@@ -26,7 +26,7 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: 'find user by email' })
-  //@ApiResponse({ type: UserResponseDto })
+  @ApiResponse(UserResponseDto)
   @CacheKey('find-user-by-email')
   @Get(':email')
   async findUserByEmail(
@@ -37,7 +37,7 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: 'Check user is exist' })
-  //@ApiResponse({ type: Boolean })
+  @ApiResponse(Boolean)
   @Get('exists/:email')
   async userExists(
     @Param('email') email: string,

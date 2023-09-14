@@ -6,7 +6,9 @@ import {
   registerDecorator,
 } from 'class-validator';
 
-export function IsValidPassword(validationOptions?: ValidationOptions): any {
+export function IsValidPassword(
+  validationOptions?: ValidationOptions,
+): PropertyDecorator {
   return function (object: any, propertyName: string) {
     registerDecorator({
       name: 'isWalletAddressList',

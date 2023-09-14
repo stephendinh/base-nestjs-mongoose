@@ -66,9 +66,9 @@ export class BaseRepository<T extends BaseDocument>
     options?: QueryOptions<T>,
   ): Promise<Array<T>> {
     const { page, pageSize, sort, search } = queryOptions;
-    if (page >= -1 && pageSize >= 0) {
+    if (page >= 1 && pageSize >= 0) {
       throw new InternalServerErrorException(
-        `Use pagination() instead of findAll() with ${{ page, pageSize }}`,
+        `Use paginate() instead of findAll() with ${{ page, pageSize }}`,
       );
     }
 
@@ -132,6 +132,11 @@ export class BaseRepository<T extends BaseDocument>
     queryOptions?: QueryOptionsRequestDto,
   ): Promise<{ data: T[]; spec: PaginationResponseDto }> {
     const { page, pageSize, sort, search } = queryOptions;
+    if (!page || (pageSize !== 0 && !pageSize)) {
+      throw new InternalServerErrorException(
+        `Use findAll() instead of paginate()`,
+      );
+    }
 
     const sortObject = stringToSortObject(sort);
     const searchObject = stringToSearchObject(search);
@@ -148,8 +153,8 @@ export class BaseRepository<T extends BaseDocument>
     return {
       data: await documents.lean(),
       spec: {
-        currentPage: page ?? -1,
-        pageSize: pageSize ?? -1,
+        currentPage: page,
+        pageSize: pageSize,
         total,
       },
     };
