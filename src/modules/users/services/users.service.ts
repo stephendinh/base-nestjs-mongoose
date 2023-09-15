@@ -33,10 +33,10 @@ export class UsersService {
   }
 
   async userExists(email: string): Promise<AppResponseDto<boolean>> {
-    const user = await this.usersRepository.findOneByConditions({
+    const userExist = await this.usersRepository.isExist({
       email,
       status: UserStatus.ACTIVE,
     });
-    return response(!!user);
+    return response(userExist);
   }
 }

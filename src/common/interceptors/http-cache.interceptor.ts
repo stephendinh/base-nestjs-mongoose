@@ -26,10 +26,8 @@ export class HttpCacheInterceptor extends CacheInterceptor {
       (cachedResponse.meta as MetaResponseDto).isCachingData = true;
       return of(cachedResponse);
     }
-    return next.handle().pipe(
-      tap((response) => {
-        return this.cacheManager.set(cacheKey, response);
-      }),
-    );
+    return next
+      .handle()
+      .pipe(tap((response) => this.cacheManager.set(cacheKey, response)));
   }
 }

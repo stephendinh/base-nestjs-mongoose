@@ -5,10 +5,10 @@ import { IsDefined, IsEnum, IsMongoId, IsString } from 'class-validator';
 
 export class UserResponseDto {
   @ApiResponseProperty()
-  @Expose({ name: '_id' })
+  @Expose({ name: 'id' })
   @IsMongoId()
   @Transform((data) => (data.obj._id ? data.obj._id.toString() : data.value))
-  id: string;
+  _id: string;
 
   @ApiResponseProperty()
   @Expose()

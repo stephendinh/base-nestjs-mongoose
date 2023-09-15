@@ -23,6 +23,7 @@ export class QueryOptionsRequestDto {
   pageSize?: number;
 
   @ApiPropertyOptional({
+    type: String,
     example: `[{"property":"createdAt","direction":"asc"}]`,
   })
   @IsOptional()
@@ -31,6 +32,7 @@ export class QueryOptionsRequestDto {
   sort?: { [key: string]: SortOrder };
 
   @ApiPropertyOptional({
+    type: String,
     example: `[{"property":"name","value":"someone","strategy":"exact"}]`,
   })
   @IsOptional()

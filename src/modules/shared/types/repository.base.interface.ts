@@ -10,6 +10,8 @@ export interface BaseRepositoryInterface<T> {
     projection?: ProjectionType<T>,
   ): Promise<T>;
 
+  isExist(conditions: FilterQuery<T>): Promise<boolean>;
+
   findOneByConditions(
     conditions?: FilterQuery<T>,
     projection?: ProjectionType<T>,

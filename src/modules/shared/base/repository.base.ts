@@ -37,6 +37,11 @@ export class BaseRepository<T extends BaseDocument>
     return document as T;
   }
 
+  async isExist(conditions: FilterQuery<T> = {}): Promise<boolean> {
+    const document = await this.model.findOne(conditions);
+    return Boolean(document);
+  }
+
   async findOneByConditions(
     conditions: FilterQuery<T> = {},
     projection?: ProjectionType<T>,
@@ -81,11 +86,15 @@ export class BaseRepository<T extends BaseDocument>
     return documents as Array<T>;
   }
 
-  async update(id: Types.ObjectId | string, dto: Partial<T>): Promise<T> {
+  async update(
+    id: Types.ObjectId | string,
+    dto: Partial<T>,
+    upsert = false,
+  ): Promise<T> {
     const updatedDocument = await this.model.findOneAndUpdate(
       { _id: id, deletedAt: null },
       dto,
-      { new: true },
+      { new: true, upsert },
     );
     return updatedDocument;
   }
