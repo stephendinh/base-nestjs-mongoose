@@ -20,26 +20,46 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@fastify/multipart": "^7.7.3",
     "@fastify/rate-limit": "^8.0.3",
     "@fastify/static": "^6.10.2",
+    "@nestjs-modules/mailer": "^1.9.1",
+    "@nestjs/axios": "^3.0.0",
+    "@nestjs/bull": "^10.0.1",
     "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/jwt": "^10.1.1",
     "@nestjs/mongoose": "^10.0.1",
+    "@nestjs/passport": "^10.0.2",
+    "@nestjs/platform-express": "^10.2.5",
     "@nestjs/platform-fastify": "^10.2.2",
+    "@nestjs/platform-socket.io": "^9.4.3",
+    "@nestjs/schedule": "^3.0.3",
     "@nestjs/swagger": "^7.1.10",
-    "cache-manager": "^5.2.3",
-    "cache-manager-redis-store": "^3.0.1",
+    "@nestjs/websockets": "^10.2.5",
+    "@types/multer": "^1.4.7",
+    "bcrypt": "^5.1.1",
+    "bull": "^4.11.3",
+    "cache-manager": "^4.1.0",
+    "cache-manager-redis-store": "^2.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "cloudinary": "^1.40.0",
+    "dayjs": "^1.11.9",
+    "dotenv": "^16.3.1",
+    "fastify-multer": "^2.0.3",
+    "hbs": "^4.2.0",
+    "i": "^0.3.7",
+    "migrate-mongo": "^10.0.0",
     "mongoose": "^7.5.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "redis": "^4.6.8",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "socket.io": "^4.7.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -79,6 +99,24 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/",
+      "main.ts$",
+      ".module.ts$",
+      ".spec.ts$",
+      ".strategy.ts$",
+      ".dto.ts$",
+      ".schema.ts$",
+      "src/core/*",
+      "src/common/*"
+    ],
+    "moduleNameMapper": {
+      "^@common/(.*)$": "<rootDir>/common/$1",
+      "^@modules/(.*)$": "<rootDir>/modules/$1",
+      "^@database/(.*)$": "<rootDir>/database/$1",
+      "^@auth/(.*)$": "<rootDir>/auth/$1"
+    }
   }
 }

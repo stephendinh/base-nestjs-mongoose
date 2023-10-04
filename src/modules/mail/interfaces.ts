@@ -1,0 +1,12 @@
+export interface Mail {
+  from?: string;
+  to: string;
+  subject: string;
+  text: string;
+  [key: string]: any;
+}
+
+export const MAIL_QUEUE = {
+  NAME: 'emailSending',
+  JOB: 'welcome',
+};

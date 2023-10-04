@@ -26,13 +26,16 @@ export class BaseRepository<T extends BaseDocument>
   async findOneById(
     id: Types.ObjectId | string,
     projection?: ProjectionType<T>,
+    isHideThrowingError?: boolean,
   ): Promise<T> {
     const document = await this.model.findById(id, projection, { lean: true });
-    if (!document || document.deletedAt) {
-      throw ExceptionFactory.create(
-        ExceptionCodes.DOCUMENT_NOT_FOUND,
-        `${this.model.modelName} not found`,
-      );
+    if (!isHideThrowingError) {
+      if (!document || document.deletedAt) {
+        throw ExceptionFactory.create(
+          ExceptionCodes.DOCUMENT_NOT_FOUND,
+          `${this.model.modelName} not found`,
+        );
+      }
     }
     return document as T;
   }

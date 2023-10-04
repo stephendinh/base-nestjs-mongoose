@@ -1,7 +1,9 @@
 import {
+  BadRequestException,
   ConflictException,
   HttpException,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ExceptionCodes } from './constants/exception-codes.enum';
 import { ExceptionMessages } from './constants/exception-messages';
@@ -30,6 +32,16 @@ export class ExceptionFactory {
       case ExceptionCodes.PASSWORD_TOO_SHORT:
         exception = new ConflictException(
           message || ExceptionMessages.VALIDATE.PASSWORD_TOO_SHORT,
+        );
+        break;
+      case ExceptionCodes.BAD_REQUEST:
+        exception = new BadRequestException(
+          message || ExceptionMessages.BAD_REQUEST,
+        );
+        break;
+      case ExceptionCodes.UNAUTHORIZED:
+        exception = new UnauthorizedException(
+          message || ExceptionMessages.UNAUTHORIZED,
         );
         break;
       case ExceptionCodes.UNKNOWN:

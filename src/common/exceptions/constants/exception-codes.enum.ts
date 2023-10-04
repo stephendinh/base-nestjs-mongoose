@@ -3,5 +3,7 @@ export enum ExceptionCodes {
   INVALID_PASSWORD = 2,
   PASSWORD_TOO_SHORT = 3,
   DOCUMENT_NOT_FOUND = 4,
+  BAD_REQUEST = 5,
+  UNAUTHORIZED = 6,
   UNKNOWN = 999,
 }

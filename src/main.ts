@@ -9,6 +9,7 @@ import { corsConfigs } from '@config/cors.config';
 import { swaggerConfigs } from '@config/swagger.config';
 import { nestFastifyAppConfig } from '@config/nest-fastify-app.config';
 import { Logger } from '@nestjs/common';
+import { contentParser } from 'fastify-multer';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -21,6 +22,7 @@ async function bootstrap() {
   app.enableCors(corsConfigs(configService, logger));
   nestFastifyAppConfig(app);
   swaggerConfigs(app, configService, logger);
+  app.register(contentParser);
 
   const port = configService.get<number>('PORT');
   await app.listen(port, '0.0.0.0');

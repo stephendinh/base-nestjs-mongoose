@@ -1,3 +1,4 @@
+import { EUserRoles } from '@database/schemas/types/roles.enum';
 import { UserStatus } from '@database/schemas/types/user-status.enum';
 import { ApiResponseProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Transform } from 'class-transformer';
@@ -32,15 +33,20 @@ export class UserResponseDto {
   @IsString()
   lastName: string;
 
-  @ApiResponseProperty()
-  @Expose()
-  @IsDefined()
-  @IsString()
-  fullName: string;
-
   @ApiResponseProperty({ enum: UserStatus })
   @Expose()
   @IsDefined()
   @IsEnum(UserStatus)
   status: UserStatus;
+
+  @ApiResponseProperty({ enum: EUserRoles })
+  @Expose()
+  @IsDefined()
+  @IsEnum(EUserRoles)
+  role: EUserRoles;
+
+  @ApiResponseProperty()
+  @Expose()
+  @IsDefined()
+  isVerified: boolean;
 }
