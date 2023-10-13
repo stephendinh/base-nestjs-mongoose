@@ -18,7 +18,7 @@ export class AppController {
   }
   @Post()
   async runhere(@Req() req: any, @Body() data: any) {
-    console.log('handleWebhook', data);
+    console.log('handleWebhook', JSON.parse(data.payload));
     return this.appService.handleWebhook();
   }
 }
