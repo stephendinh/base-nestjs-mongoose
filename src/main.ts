@@ -19,7 +19,8 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const logger = new Logger('Bootstrap');
 
-  app.enableCors(corsConfigs(configService, logger));
+  app.enableCors();
+  // app.enableCors(corsConfigs(configService, logger));
   nestFastifyAppConfig(app);
   swaggerConfigs(app, configService, logger);
   app.register(contentParser);
